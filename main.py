@@ -31,18 +31,6 @@ async def on_ready():
 # Events
 @discord_bot.event
 async def on_message(message):
-		if message.author.bot:
-				# Ignore if the message is sent by a bot
-				return
-
-		author_name = message.author.name  # Get the name of the message author
-		server_name = message.guild.name  # Get the name of the server
-		channel_name = message.channel.name  # Get the name of the channel
-
-		# Format the text for sending to Telegram
-
-@discord_bot.event
-async def on_message(message):
 		author_name = message.author.name
 		server_name = message.guild.name
 		channel_name = message.channel.name
