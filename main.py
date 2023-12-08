@@ -7,11 +7,9 @@ from discord.ext import commands
 from discord import Intents
 from telegram import Bot 
 
-
-
 DISCORD_TOKEN = os.environ.get('DISCORD_TOKEN')
 TELEGRAM_TOKEN = os.environ.get('TELEGRAM_TOKEN')
-TELEGRAM_CHAT_IDS = ['2023014289', '2106774730']
+TELEGRAM_CHAT_IDS = ['2023014289']
 
 voice_sessions = {}
 
@@ -30,11 +28,13 @@ async def on_ready():
 
 # Events
 @discord_bot.event
-async def on_message(message):
+async def on_messages(message):
+		if message.author.bot:
+				return
+
 		author_name = message.author.name
 		server_name = message.guild.name
 		channel_name = message.channel.name
-
 		text = f'Ник: {author_name}\nСервер: {server_name}\nКанал: {channel_name}\nСообщение: {message.content}'
 
 		if message.attachments:
@@ -48,9 +48,10 @@ async def on_message(message):
 
 		await discord_bot.process_commands(message)
 
+
 		# Check for attachments
 @discord_bot.event
-async def on_message(message):
+async def on_messager(message):
 		if message.attachments:
 				attachments = "\nВложения:"
 				for attachment in message.attachments:
@@ -122,6 +123,6 @@ async def servers(ctx):
 				members = guild.members
 				member_names = [member.name for member in members]
 				text = f"Сервер: {guild.name}\nУчастники: {', '.join(member_names)}"
-				await ctx.send(f'\n{text}\n')
+				await ctx.send(f'```\n{text}\n```')
 
 discord_bot.run(DISCORD_TOKEN)
